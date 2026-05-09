@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quirkeez</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./quirkeez_style.css">
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.92/build/spline-viewer.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const splineViewer = document.querySelector('spline-viewer');
+      let lastScrollY = window.scrollY;
+
+      // Wait for Spline to load
+      splineViewer.addEventListener('load', (e) => {
+        const spline = e.detail;
+        let lastScrollPercent = -1;
+        let hasReachedMax = false;
+
+        window.addEventListener('scroll', function() {
+          // Calculate scroll progress (0 to 100)
+          const scrollTop = window.scrollY;
+          const docHeight = document.body.scrollHeight - window.innerHeight;
+          const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+
+          // Stop triggering events once we reach 100 and start scrolling beyond
+          if (scrollPercent === 100) {
+            hasReachedMax = true;
+          } else if (scrollPercent < 100) {
+            hasReachedMax = false;
+          }
+
+          // Only trigger if the scroll percent has changed and we haven't exceeded the max
+          if (scrollPercent !== lastScrollPercent && !hasReachedMax) {
+            spline.triggerEvent('Scroll', scrollPercent);
+            lastScrollPercent = scrollPercent;
+          } else if (scrollPercent === 100 && lastScrollPercent !== 100) {
+            // Trigger once when reaching 100
+            spline.triggerEvent('Scroll', scrollPercent);
+            lastScrollPercent = scrollPercent;
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <img class="bildmarke" src="./img/Quirkeez_Bildmarke_edited.png.avif" alt="Quirkeez Bildmarke">
+  </header>
+  <main>
+    <div class="content-wrapper">
+      <section class="section-3d">
+        <spline-viewer url="https://prod.spline.design/zj-LcLgm4tHfkUlW/scene.splinecode"></spline-viewer>
+      </section>
+      <div class="text-sections">
+        <section class="item_info">
+          <h1>Hotdog Plate</h1>
+          <p>A one-of-a-kind edible masterpiece, this plate is as rare and distinctive as the collector destined to claim it. Every color and texture tells a story of individuality, transforming a fleeting creation into a truly unforgettable treasure.</p>
+          <button>Add to basket</button>
+        </section>
+        <section class="additional_info">
+          <h1>Why Choose Quirkeez?</h1>
+          <p>At Quirkeez, we believe the extraordinary lives in the everyday moments that bring us together. A simple meal can become a cherished memory when shared around a table that reflects your personality and creativity. Our handcrafted plates are more than dinnerware—they are conversation starters, collectible art pieces, and meaningful expressions of individuality. Every Quirkeez creation is carefully designed and crafted by hand, ensuring that no two pieces are ever exactly alike. Each plate carries its own playful details, bold character, and distinctive charm, making it as unique as the person who chooses it. Whether displayed as art or used to serve your favorite dishes, our plates transform ordinary dining into something unforgettable. With Quirkeez, your table becomes a canvas for self-expression, where creativity, joy, and one-of-a-kind moments are celebrated every single day.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2026 QUIRKEEZ All rights reserved.</p>
+    <address>
+      Aargauerstrasse 250<br>
+      8048 Zürich<br>
+      quirkeez.ceramics@gmail.com
+    </address>
+  </footer>
+</body>
+</html>
